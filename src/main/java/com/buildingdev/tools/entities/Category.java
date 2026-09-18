@@ -1,5 +1,6 @@
 package com.buildingdev.tools.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,22 +18,23 @@ public class Category {
     @Column(length = 100,nullable = false)
     private String name;
 
-    @ManyToOne
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
     public Category() {
     }
 
-    public Category(Integer id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
