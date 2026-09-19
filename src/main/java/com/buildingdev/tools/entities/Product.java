@@ -1,5 +1,6 @@
 package com.buildingdev.tools.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -29,6 +30,10 @@ public class Product {
     @ManyToMany
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "items")
+    private Set<Order> orders = new HashSet<>();
 
     public Product(){
     }

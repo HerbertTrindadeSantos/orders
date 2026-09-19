@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -24,6 +26,10 @@ public class Order {
     @ManyToOne()
     @JoinColumn(name = "client_id")
     private User client;
+
+    @ManyToMany
+    @JoinTable(name = "tb_products_orders", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Product> items = new HashSet<>();
 
     public Order() {
     }

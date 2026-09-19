@@ -1,0 +1,82 @@
+package com.buildingdev.tools.entities;
+
+import com.buildingdev.tools.entities.pk.OrderItemPk;
+import jakarta.persistence.*;
+
+import java.util.Objects;
+
+@Entity
+@Table(name = "tb_order_item")
+public class OrderItem {
+
+    @EmbeddedId
+    private OrderItemPk id;
+
+    @Column(nullable = false)
+    private Integer quantity;
+
+    @Column(nullable = false)
+    private Double price;
+
+    public OrderItem(){
+    }
+
+    public OrderItem(Order order,Product product,Integer quantity, Double price) {
+        id.setOrder(order);
+        id.setProduct(product);
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public OrderItemPk getId() {
+        return id;
+    }
+
+    public void setId(OrderItemPk id) {
+        this.id = id;
+    }
+
+    public Order getOrder(){
+        return id.getOrder();
+    }
+
+    public void setOrder(Order order){
+        this.id.setOrder(order);
+    }
+
+    public Product getProduct(){
+        return id.getProduct();
+    }
+
+    public void setProduct(Product product){
+        this.id.setProduct(product);
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(id, orderItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+}
