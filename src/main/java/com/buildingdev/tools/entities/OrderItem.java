@@ -1,6 +1,7 @@
 package com.buildingdev.tools.entities;
 
 import com.buildingdev.tools.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class OrderItem {
 
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id =new OrderItemPk();
 
     @Column(nullable = false)
     private Integer quantity;
@@ -27,15 +28,8 @@ public class OrderItem {
         this.quantity = quantity;
         this.price = price;
     }
-
-    public OrderItemPk getId() {
-        return id;
-    }
-
-    public void setId(OrderItemPk id) {
-        this.id = id;
-    }
-
+    
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
@@ -43,6 +37,7 @@ public class OrderItem {
     public void setOrder(Order order){
         this.id.setOrder(order);
     }
+
 
     public Product getProduct(){
         return id.getProduct();
