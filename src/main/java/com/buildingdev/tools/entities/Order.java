@@ -27,9 +27,8 @@ public class Order {
     @JoinColumn(name = "client_id")
     private User client;
 
-    @ManyToMany
-    @JoinTable(name = "tb_products_orders", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Product> items = new HashSet<>();
+   @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order() {
     }
@@ -73,6 +72,10 @@ public class Order {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override
