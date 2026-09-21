@@ -38,7 +38,6 @@ public class OrderItem {
         this.id.setOrder(order);
     }
 
-
     public Product getProduct(){
         return id.getProduct();
     }

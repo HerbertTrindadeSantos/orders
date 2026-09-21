@@ -3,6 +3,7 @@ package com.buildingdev.tools.entities;
 import com.buildingdev.tools.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd'T'HH:mm:ss'Z'",timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
     private Integer orderStatus;
@@ -27,13 +28,16 @@ public class Order {
     @JoinColumn(name = "client_id")
     private User client;
 
-   @OneToMany(mappedBy = "id.order")
+    @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order() {
     }
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus,User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
         setStatus(orderStatus);
@@ -61,7 +65,7 @@ public class Order {
     }
 
     public void setStatus(OrderStatus orderStatus) {
-        if (orderStatus != null){
+        if (orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
         }
     }
@@ -76,6 +80,14 @@ public class Order {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
