@@ -1,8 +1,10 @@
 package com.buildingdev.tools.service;
 
 import com.buildingdev.tools.entities.User;
+import com.buildingdev.tools.service.exception.DatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
 import com.buildingdev.tools.repositories.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -53,8 +55,11 @@ public class UserService {
 
         User user = userRepository.findById(id).
                 orElseThrow(()-> new UserNotFoundException(id));
-
-        userRepository.delete(user);
+        try{
+            userRepository.delete(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(id);
+        }
     }
 
 }
