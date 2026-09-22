@@ -1,4 +1,4 @@
-package com.buildingdev.tools.exception;
+package com.buildingdev.tools.service.exception;
 
 public class CategoryNotFoundException extends RuntimeException {
     public CategoryNotFoundException(String message) {

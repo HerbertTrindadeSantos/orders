@@ -1,4 +1,4 @@
-package com.buildingdev.tools.exception;
+package com.buildingdev.tools.service.exception;
 
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException(String message) {

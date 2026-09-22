@@ -1,7 +1,7 @@
 package com.buildingdev.tools.service;
 
 import com.buildingdev.tools.entities.Order;
-import com.buildingdev.tools.exception.OrderNotFoundException;
+import com.buildingdev.tools.service.exception.OrderNotFoundException;
 import com.buildingdev.tools.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 

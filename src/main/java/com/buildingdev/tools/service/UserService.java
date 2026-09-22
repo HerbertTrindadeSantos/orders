@@ -1,7 +1,7 @@
 package com.buildingdev.tools.service;
 
 import com.buildingdev.tools.entities.User;
-import com.buildingdev.tools.exception.UserNotFoundException;
+import com.buildingdev.tools.service.exception.UserNotFoundException;
 import com.buildingdev.tools.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ public class UserService {
 
     public User findById(Long id){
 
-        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("Usuario nao encontrado id: "+id));
+        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
 
         return user;
     }
@@ -35,7 +35,7 @@ public class UserService {
     public User update(Long id,User updateUser){
 
         User entity = userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException("Usuario nao encontrado id: "+id));
+                .orElseThrow(()-> new UserNotFoundException(id));
 
         return userRepository.save(updateData(entity,updateUser));
     }
@@ -45,14 +45,14 @@ public class UserService {
         entity.setName(updateUser.getName());
         entity.setEmail(updateUser.getEmail());
         entity.setPhone(updateUser.getPhone());
-        
+
         return entity;
     }
 
     public void deleteById(@PathVariable Long id){
 
         User user = userRepository.findById(id).
-                orElseThrow(()-> new UserNotFoundException("Usuario nao encontrado id: "+id));
+                orElseThrow(()-> new UserNotFoundException(id));
 
         userRepository.delete(user);
     }

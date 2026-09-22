@@ -1,7 +1,7 @@
 package com.buildingdev.tools.service;
 
 import com.buildingdev.tools.entities.Product;
-import com.buildingdev.tools.exception.ProductNotFoundException;
+import com.buildingdev.tools.service.exception.ProductNotFoundException;
 import com.buildingdev.tools.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 

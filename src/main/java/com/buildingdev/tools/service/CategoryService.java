@@ -2,7 +2,7 @@ package com.buildingdev.tools.service;
 
 
 import com.buildingdev.tools.entities.Category;
-import com.buildingdev.tools.exception.CategoryNotFoundException;
+import com.buildingdev.tools.service.exception.CategoryNotFoundException;
 import com.buildingdev.tools.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
