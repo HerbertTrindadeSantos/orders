@@ -28,16 +28,25 @@ public class UserService {
         return user;
     }
 
-    public User insert(User updateUser){
-
-        User newUser = new User();
-
-        newUser.setName(updateUser.getName());
-        newUser.setEmail(updateUser.getEmail());
-        newUser.setPhone(updateUser.getPhone());
-        newUser.setPassword(updateUser.getPassword());
-
+    public User insert(User newUser){
         return userRepository.save(newUser);
+    }
+
+    public User update(Long id,User updateUser){
+
+        User entity = userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("Usuario nao encontrado id: "+id));
+
+        return userRepository.save(updateData(entity,updateUser));
+    }
+
+    private User updateData(User entity, User updateUser){
+
+        entity.setName(updateUser.getName());
+        entity.setEmail(updateUser.getEmail());
+        entity.setPhone(updateUser.getPhone());
+        
+        return entity;
     }
 
     public void deleteById(@PathVariable Long id){
