@@ -1,8 +1,8 @@
 package com.buildingdev.tools.controller;
 
-import com.buildingdev.tools.entities.User;
+import com.buildingdev.tools.dto.UserRequestDTO;
+import com.buildingdev.tools.dto.UserResponseDTO;
 import com.buildingdev.tools.service.UserService;
-import jakarta.servlet.Servlet;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,35 +21,34 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> users = userService.findAll();
+    public ResponseEntity<List<UserResponseDTO>> findAll(){
+        List<UserResponseDTO> users = userService.findAll();
         return ResponseEntity.ok().body(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User user = userService.findById(id);
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
+        UserResponseDTO user = userService.findById(id);
         return ResponseEntity.ok().body(user);
     }
 
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User updateUser){
-
-        User user = userService.insert(updateUser);
+    public ResponseEntity<UserResponseDTO> insert(@RequestBody UserRequestDTO user){
+        UserResponseDTO newUser = userService.insert(user);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(user.getId()).toUri();
+                .buildAndExpand(newUser.id()).toUri();
 
-        return ResponseEntity.created(uri).body(user);
+        return ResponseEntity.created(uri).body(newUser);
 
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User newUser){
+    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id,@RequestBody UserRequestDTO user){
 
-        User user =userService.update(id,newUser);
+        UserResponseDTO updateUser = userService.update(id,user);
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(updateUser);
     }
 
     @DeleteMapping("/{id}")

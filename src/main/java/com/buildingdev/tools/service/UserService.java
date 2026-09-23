@@ -1,5 +1,8 @@
 package com.buildingdev.tools.service;
 
+import com.buildingdev.tools.dto.UserRequestDTO;
+import com.buildingdev.tools.dto.UserResponseDTO;
+import com.buildingdev.tools.dto.mapper.UserMapper;
 import com.buildingdev.tools.entities.User;
 import com.buildingdev.tools.service.exception.DatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
@@ -14,39 +17,45 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,UserMapper userMapper){
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public List<UserResponseDTO> findAll(){
+        return userRepository.findAll().stream().map(userMapper::toUserResponseDTO).toList();
     }
 
-    public User findById(Long id){
-
+    public UserResponseDTO findById(Long id){
         User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
-
-        return user;
+        return userMapper.toUserResponseDTO(user);
     }
 
-    public User insert(User newUser){
-        return userRepository.save(newUser);
+    public UserResponseDTO insert(UserRequestDTO user){
+        User newUser = userMapper.toEntity(user);
+        userRepository.save(newUser);
+
+        return userMapper.toUserResponseDTO(newUser);
     }
 
-    public User update(Long id,User updateUser){
+    public UserResponseDTO update(Long id,UserRequestDTO user){
 
-        User entity = userRepository.findById(id)
+        User updateUser = userRepository.findById(id)
                 .orElseThrow(()-> new UserNotFoundException(id));
+        userRepository.save((updateData(updateUser,user)));
 
-        return userRepository.save(updateData(entity,updateUser));
+        UserResponseDTO userResponseDTO = userMapper.toUserResponseDTO(updateUser);
+
+        return userResponseDTO;
     }
 
-    private User updateData(User entity, User updateUser){
+    private User updateData(User entity, UserRequestDTO updateUser){
 
-        entity.setName(updateUser.getName());
-        entity.setEmail(updateUser.getEmail());
-        entity.setPhone(updateUser.getPhone());
+        entity.setName(updateUser.name());
+        entity.setEmail(updateUser.email());
+        entity.setPhone(updateUser.phone());
 
         return entity;
     }
