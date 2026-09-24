@@ -67,7 +67,7 @@ public class UserService {
         try{
             userRepository.delete(user);
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(id);
+            throw new UserDatabaseException(id);
         }
     }
 

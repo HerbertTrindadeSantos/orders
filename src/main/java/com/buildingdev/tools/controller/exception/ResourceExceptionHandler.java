@@ -1,7 +1,7 @@
 package com.buildingdev.tools.controller.exception;
 
 import com.buildingdev.tools.service.exception.CategoryNotFoundException;
-import com.buildingdev.tools.service.exception.DatabaseException;
+import com.buildingdev.tools.service.exception.UserDatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class ResourceExceptionHandler{
         return ResponseEntity.status(status).body(standError);
     }
 
-    @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<StandError> databaseException(DatabaseException e,HttpServletRequest request){
+    @ExceptionHandler(UserDatabaseException.class)
+    public ResponseEntity<StandError> userDatabaseException(UserDatabaseException e,HttpServletRequest request){
         String error = "Usuario nao pode ser excluido";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandError standError = new StandError(Instant.now(),status.value(),

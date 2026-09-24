@@ -1,7 +1,7 @@
 package com.buildingdev.tools.service.exception;
 
-public class DatabaseException extends RuntimeException {
-    public DatabaseException(Long id) {
+public class UserDatabaseException extends RuntimeException {
+    public UserDatabaseException(Long id) {
         super("O usuario nao pode ser excluido id: "+id);
     }
 }
