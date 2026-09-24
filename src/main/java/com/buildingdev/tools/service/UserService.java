@@ -4,7 +4,7 @@ import com.buildingdev.tools.dto.UserRequestDTO;
 import com.buildingdev.tools.dto.UserResponseDTO;
 import com.buildingdev.tools.dto.mapper.UserMapper;
 import com.buildingdev.tools.entities.User;
-import com.buildingdev.tools.service.exception.DatabaseException;
+import com.buildingdev.tools.service.exception.UserDatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
 import com.buildingdev.tools.repositories.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;

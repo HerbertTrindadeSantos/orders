@@ -1,5 +1,6 @@
 package com.buildingdev.tools.controller.exception;
 
+import com.buildingdev.tools.service.exception.CategoryNotFoundException;
 import com.buildingdev.tools.service.exception.DatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,8 @@ public class ResourceExceptionHandler{
     public ResponseEntity<StandError> userNotFound(UserNotFoundException e, HttpServletRequest request){
         String error = "Usuario nao encontrado";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StandError standError = new StandError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+        StandError standError = new StandError(Instant.now(),status.value(),
+                error,e.getMessage(),request.getRequestURI());
 
         return ResponseEntity.status(status).body(standError);
     }
@@ -27,7 +29,28 @@ public class ResourceExceptionHandler{
     public ResponseEntity<StandError> databaseException(DatabaseException e,HttpServletRequest request){
         String error = "Usuario nao pode ser excluido";
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandError standError = new StandError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+        StandError standError = new StandError(Instant.now(),status.value(),
+                error,e.getMessage(),request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standError);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<StandError> categoryNotFoundException(CategoryNotFoundException e,HttpServletRequest request){
+        String error = "Categoria nao encontrada";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandError standError = new StandError(Instant.now(),status.value(),
+                error,e.getMessage(),request.getRequestURI());
+
+          return ResponseEntity.status(status).body(standError);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<StandError> categoryDatabaseException(CategoryNotFoundException e, HttpServletRequest request){
+        String error = "Categoria nao pode ser excluida";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandError standError = new StandError(Instant.now(),status.value(),
+                error,e.getMessage(),request.getRequestURI());
 
         return ResponseEntity.status(status).body(standError);
     }
