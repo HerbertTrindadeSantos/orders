@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 @Configuration
-@Profile("test")
+@Profile("prod")
 public class testeUserConfig implements CommandLineRunner {
 
     private UserRepository userRepository;
