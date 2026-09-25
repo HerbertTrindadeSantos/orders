@@ -1,5 +1,6 @@
 package com.buildingdev.tools.controller.exception;
 
+import com.buildingdev.tools.service.exception.CategoryDatabaseException;
 import com.buildingdev.tools.service.exception.CategoryNotFoundException;
 import com.buildingdev.tools.service.exception.UserDatabaseException;
 import com.buildingdev.tools.service.exception.UserNotFoundException;
@@ -35,7 +36,7 @@ public class ResourceExceptionHandler{
         return ResponseEntity.status(status).body(standError);
     }
 
-    @ExceptionHandler(CategoryNotFoundException.class)
+    @ExceptionHandler(CategoryDatabaseException.class)
     public ResponseEntity<StandError> categoryNotFoundException(CategoryNotFoundException e,HttpServletRequest request){
         String error = "Categoria nao encontrada";
         HttpStatus status = HttpStatus.NOT_FOUND;
