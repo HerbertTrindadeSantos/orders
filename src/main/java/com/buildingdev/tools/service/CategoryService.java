@@ -19,8 +19,9 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     private CategoryMapper categoryMapper;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository,CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     public List<CategoryResponseDTO> findAll(){
